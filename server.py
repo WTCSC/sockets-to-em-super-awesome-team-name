@@ -65,7 +65,7 @@ def handle_client(conn, addr):
 
 # Bind to 0.0.0.0:5000
 servport = random.randrange(5000, 12000, 1)
-server.bind(("10.103.0.70", servport))
+server.bind((input("input your server's ip: "), servport))
 print(f"10.103.0.70 : {servport}")
 
 # Listen for connections
