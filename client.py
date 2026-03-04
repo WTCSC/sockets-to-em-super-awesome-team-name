@@ -1,20 +1,27 @@
 import socket
+import threading
 
 # Create a socket object
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to server (replace with the server machine’s IP if needed)
-client.connect((input("What is the host IP?\n"), int(input("What port?\n"))))
+conn.connect((input("What is the host IP?\n"), int(input("What port?\n"))))
 print("Connected to server")
 
+def recieving(conn):
+  while True:
+    received = conn.recv(1024).decode()
+    if received != "" and received != "*blank*":
+      print(received)
+
+threading.Thread(target=recieving, args=(conn,)).start()
+
 # Send messages and receive responses
-while 1==1:
-    msg = input("Enter message: ")
+while True:
+    msg = input()
     if not msg:
-        break
-    client.send(msg.encode())
+        msg = "*blank*"
+    conn.send(msg.encode())
     if msg.lower() == "goodbye":
-      client.close()
+      conn.close()
       break
-    response = client.recv(1024).decode()
-    print(f"Server says: {response}")
