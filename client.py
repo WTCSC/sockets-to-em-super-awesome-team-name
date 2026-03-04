@@ -9,10 +9,10 @@ conn.connect((input("What is the host IP?\n"), int(input("What port?\n"))))
 print("Connected to server")
 
 def recieving(conn):
-  while True:
-    received = conn.recv(1024).decode()
-    if received != "" and received != "*blank*":
-      print(received)
+    while True:
+      received = conn.recv(1024).decode()
+      if received != "" and received != "*blank*":
+        print(received)
 
 threading.Thread(target=recieving, args=(conn,)).start()
 
@@ -24,4 +24,4 @@ while True:
     conn.send(msg.encode())
     if msg.lower() == "goodbye":
       conn.close()
-      break
+      quit()
